@@ -1,0 +1,1 @@
+export const colorText = "#4cd137" //verde consola
