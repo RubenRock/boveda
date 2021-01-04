@@ -1,0 +1,3 @@
+npm install expo-sqlite
+
+npm install mongoose --save
