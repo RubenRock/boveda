@@ -14,7 +14,7 @@ function detalles({accion}){
             <View style={styles.head}>
                 <AntDesign style={styles.head_items} name="leftcircleo" size={30} onPress={() => accion(false)}/>
                 <AntDesign style={styles.head_items} name="save" size={30} onPress={() => ConexionSqlite.guardarDatos({titulo,descripcion})}/>                   
-                <AntDesign style={styles.head_items} name="save" size={30} onPress={() => ConexionSqlite.verificarTablas()}/>                   
+                <AntDesign style={styles.head_items} name="delete" size={30} onPress={() => console.log('pushado borrar')}/>       
             </View>
             
             <View>
