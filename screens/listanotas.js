@@ -6,7 +6,7 @@ import * as Interface from '../components/interface'
 import * as ConexionSqlite from '../components/conexionSQL'
 
 function menu () {    
-    const [mostrarDetalles, setMostrarDetalles] = useState(false)  
+    const [mostrarDetalles, setMostrarDetalles] = useState({estado:false,titulo:'',detalle:'',clave:''})  
     const [listaTitulos, setListaTitulos] = useState([])
     
     
@@ -21,10 +21,10 @@ function menu () {
 
     return(
         <View style={{flex:1}}>
-            {!mostrarDetalles ?
+            {!mostrarDetalles.estado ?
             <>
                 <View style={styles.head}>
-                    <AntDesign style={styles.head_items} name="pluscircleo" size={35} onPress={() => setMostrarDetalles(true)}/>                    
+                    <AntDesign style={styles.head_items} name="pluscircleo" size={35} onPress={() => setMostrarDetalles({estado:true,titulo:'',detalle:'',clave:''})}/>                    
                     <AntDesign style={styles.head_items} name="cloudo" size={35} />
                 </View>
                 <Text style={styles.head_text}>LISTA DE NOTAS</Text>
@@ -33,7 +33,7 @@ function menu () {
                 style={styles.lista_titulos}
                 data={listaTitulos}
                 keyExtractor={item => item.clave}
-                renderItem={item => <TouchableOpacity onPress={()=>console.log(item.item.clave)}>
+                renderItem={item => <TouchableOpacity onPress={() => setMostrarDetalles({estado:true,titulo:item.item.nombre,detalle:item.item.detalle, clave:item.item.clave})}>
                                         <View style={{flexDirection:'row',borderBottomWidth:1, borderColor:Interface.colorText,justifyContent:'space-between'}}>
                                             <Text style={styles.texto_lista}>{item.item.nombre}</Text>
                                             <Text style={styles.fecha_lista}>{item.item.fecha}</Text>                                            
@@ -44,7 +44,7 @@ function menu () {
                 />
              </> 
             :
-                <Detalles accion={setMostrarDetalles}/>
+                <Detalles accion={setMostrarDetalles} datos={mostrarDetalles}/>
             }
 
             

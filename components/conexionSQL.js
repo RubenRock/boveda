@@ -11,9 +11,8 @@ export const borrarTablas = () =>{
 }
 
 export const crearTablas = () =>{
-    db.transaction(tx => {
-        tx.executeSql("create table if not exists lista (clave text, nombre text, fecha date)");
-        tx.executeSql("create table if not exists detalles (clave text, descripcion text)");        
+    db.transaction(tx => {       
+        tx.executeSql("create table if not exists lista (clave text, nombre text, detalle text, fecha date)");        
         tx.executeSql("create table if not exists usuarios (login text, password text PRIMARY KEY)");        
        
         tx.executeSql("select * from usuarios", [],  (tx, res) =>  {            
@@ -29,14 +28,23 @@ export const crearTablas = () =>{
       },(e) => alert(e));
 }
 
-export const guardarDatos = ({titulo,descripcion}) => {
-    let date = new Date().getDate()+'/'+new Date().getMonth() + 1+'/'+new Date().getFullYear()
-    const clave = Math.random()
-    db.transaction(tx => {             
-        tx.executeSql("insert into lista values (?, ?, ?)", [clave,titulo,date]);        
-        tx.executeSql("insert into detalles values (?, ?)", [clave,descripcion]);        
-      },(e) => console.log(e),
-      () => alert('se guardo correctamente'));
+export const guardarDatos = ({titulo,descripcion,datos}) => {
+    let date = new Date().getDate()+'/'+new Date().getMonth() + 1+'/'+new Date().getFullYear()    
+    if (datos.clave) {
+        //editar
+        db.transaction(tx => {             
+            tx.executeSql("update lista set nombre = ?, detalle = ? where clave = ?", [titulo,descripcion, datos.clave]);                
+          },(e) => console.log(e),
+          () => alert('se modifico correctamente'))
+    }
+    else {  
+        //nuevo     
+        const clave = Math.random()
+        db.transaction(tx => {             
+            tx.executeSql("insert into lista values (?, ?, ?, ?)", [clave,titulo,descripcion, date]);                
+        },(e) => console.log(e),
+        () => alert('se guardo correctamente'))
+    }
 }
 
 export const leerTitulos = () => new Promise((resolve, reject) =>{
@@ -52,4 +60,12 @@ export const leerTitulos = () => new Promise((resolve, reject) =>{
         })        
       },(e) => alert(e));
 })
+
+export const eliminarTitulo = (dato) =>{    
+    db.transaction(
+        tx => {  
+            tx.executeSql(`delete from lista where clave = ?`, [dato.clave])                    
+        },(e) => console.log(e),
+        () => alert('borrado'))
+}
 

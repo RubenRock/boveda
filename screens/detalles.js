@@ -5,25 +5,26 @@ import { AntDesign } from '@expo/vector-icons'
 import * as ConexionSqlite from '../components/conexionSQL'
 
 
-function detalles({accion}){    
-    const [titulo, setTitulo] = useState('')
-    const [descripcion, setDescripcion] = useState('')
+function detalles({accion, datos}){        
+    console.log(datos)
+    const [titulo, setTitulo] = useState(datos.titulo)
+    const [descripcion, setDescripcion] = useState(datos.detalle)
 
     return(
         <View style={styles.container}>
             <View style={styles.head}>
-                <AntDesign style={styles.head_items} name="leftcircleo" size={30} onPress={() => accion(false)}/>
-                <AntDesign style={styles.head_items} name="save" size={30} onPress={() => ConexionSqlite.guardarDatos({titulo,descripcion})}/>                   
-                <AntDesign style={styles.head_items} name="delete" size={30} onPress={() => console.log('pushado borrar')}/>       
+                <AntDesign style={styles.head_items} name="leftcircleo" size={30} onPress={() => accion({estado:false})}/>
+                <AntDesign style={styles.head_items} name="save" size={30} onPress={() => ConexionSqlite.guardarDatos({titulo, descripcion, datos})}/>                   
+                <AntDesign style={styles.head_items} name="delete" size={30} onPress={() => ConexionSqlite.eliminarTitulo(datos)}/>       
             </View>
             
             <View>
                 <Text style={styles.text}>TITULO</Text>
-                <TextInput style={styles.input} onChangeText={(x) => setTitulo(x) }/>
+                <TextInput style={styles.input} onChangeText={(x) => setTitulo(x) } value={titulo}/>
             </View>
 
             <Text style={styles.text}>ESCRIBE TUS NOTAS</Text>
-            <TextInput style={styles.input} multiline='true' onChangeText={(x) => setDescripcion(x)}/>
+            <TextInput style={styles.input} multiline='true' onChangeText={(x) => setDescripcion(x)} value ={descripcion}/>
 
         </View>
     )
