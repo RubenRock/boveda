@@ -29,21 +29,25 @@ export const crearTablas = () =>{
 }
 
 export const guardarDatos = ({titulo,descripcion,datos}) => {
-    let date = new Date().getDate()+'/'+new Date().getMonth() + 1+'/'+new Date().getFullYear()    
-    if (datos.clave) {
-        //editar
-        db.transaction(tx => {             
-            tx.executeSql("update lista set nombre = ?, detalle = ? where clave = ?", [titulo,descripcion, datos.clave]);                
-          },(e) => console.log(e),
-          () => alert('se modifico correctamente'))
-    }
-    else {  
-        //nuevo     
-        const clave = Math.random()
-        db.transaction(tx => {             
-            tx.executeSql("insert into lista values (?, ?, ?, ?)", [clave,titulo,descripcion, date]);                
-        },(e) => console.log(e),
-        () => alert('se guardo correctamente'))
+    if (!titulo.trim() || !descripcion.trim())
+        alert('Datos incompletos, titulo o nota vacias')
+    else{
+        let date = new Date().getDate()+'/'+new Date().getMonth() + 1+'/'+new Date().getFullYear()    
+        if (datos.clave) {
+            //editar
+            db.transaction(tx => {             
+                tx.executeSql("update lista set nombre = ?, detalle = ? where clave = ?", [titulo,descripcion, datos.clave]);                
+            },(e) => console.log(e),
+            () => alert('se modifico correctamente'))
+        }
+        else {  
+            //nuevo     
+            const clave = Math.random()
+            db.transaction(tx => {             
+                tx.executeSql("insert into lista values (?, ?, ?, ?)", [clave,titulo,descripcion, date]);                
+            },(e) => console.log(e),
+            () => alert('se guardo correctamente'))
+        }
     }
 }
 

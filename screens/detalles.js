@@ -5,8 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 import * as ConexionSqlite from '../components/conexionSQL'
 
 
-function detalles({accion, datos}){        
-    console.log(datos)
+function detalles({accion, datos}){            
     const [titulo, setTitulo] = useState(datos.titulo)
     const [descripcion, setDescripcion] = useState(datos.detalle)
 
@@ -15,7 +14,10 @@ function detalles({accion, datos}){
             <View style={styles.head}>
                 <AntDesign style={styles.head_items} name="leftcircleo" size={30} onPress={() => accion({estado:false})}/>
                 <AntDesign style={styles.head_items} name="save" size={30} onPress={() => ConexionSqlite.guardarDatos({titulo, descripcion, datos})}/>                   
-                <AntDesign style={styles.head_items} name="delete" size={30} onPress={() => ConexionSqlite.eliminarTitulo(datos)}/>       
+                {datos.clave ?  //si abrimos una nota puede aparecer el boton de borrar
+                    <AntDesign style={styles.head_items} name="delete" size={30} onPress={() => ConexionSqlite.eliminarTitulo(datos)}/>       
+                    :null            
+                }   
             </View>
             
             <View>
