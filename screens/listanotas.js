@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Detalles from './detalles'
 import * as Interface from '../components/interface'
 import * as ConexionSqlite from '../components/conexionSQL'
-import * as ConexionMongo from '../components/conexionMongo'
+import * as ConeccionFirestore from '../components/conexionFirestore'
 
 function menu () {    
     const [mostrarDetalles, setMostrarDetalles] = useState({estado:false,titulo:'',detalle:'',clave:''})  
@@ -29,7 +29,8 @@ function menu () {
                 <>
                     <View style={styles.head}>
                         <AntDesign style={styles.head_items} name="pluscircleo" size={35} onPress={() => setMostrarDetalles({estado:true,titulo:'',detalle:'',clave:''})}/>                    
-                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> ConexionMongo.coneccion()}/>
+                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> ConeccionFirestore.subirNube([{hola:'dantes',que:'nada'},{hola:'homero',que:'hay algo'}])}/>
+                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> ConeccionFirestore.descargarNube()}/>
                     </View>
                     <Text style={styles.head_text}>LISTA DE NOTAS</Text>
 
