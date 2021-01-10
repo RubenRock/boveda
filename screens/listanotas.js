@@ -1,10 +1,11 @@
+import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react'
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import Detalles from './detalles'
 import * as Interface from '../components/interface'
 import * as ConexionSqlite from '../components/conexionSQL'
-import * as ConeccionFirestore from '../components/conexionFirestore'
+import Nube from './nube'
 
 function menu () {    
     const [mostrarDetalles, setMostrarDetalles] = useState({estado:false,titulo:'',detalle:'',clave:''})  
@@ -14,7 +15,7 @@ function menu () {
     
     useEffect(() =>{
         ConexionSqlite.leerTitulos().then(x => setListaTitulos(x))
-    },[mostrarDetalles])
+    },[mostrarDetalles,mostrarNube])
     
 
     useEffect(() =>{
@@ -23,14 +24,16 @@ function menu () {
 
     return(
         <View style={{flex:1}}>
-            {mostrarDetalles.estado ?
+            {mostrarDetalles.estado ? //ventana de la descripcion de la nota
                    <Detalles accion={setMostrarDetalles} datos={mostrarDetalles}/>
             :
-                <>
+            mostrarNube ?
+                <Nube accion={setMostrarNube}/> //ventana de subir o baja respaldo
+            :   //menu principal
+                <>   
                     <View style={styles.head}>
                         <AntDesign style={styles.head_items} name="pluscircleo" size={35} onPress={() => setMostrarDetalles({estado:true,titulo:'',detalle:'',clave:''})}/>                    
-                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> ConeccionFirestore.subirNube([{hola:'dantes',que:'nada'},{hola:'homero',que:'hay algo'}])}/>
-                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> ConeccionFirestore.descargarNube()}/>
+                        <AntDesign style={styles.head_items} name="cloudo" size={35} onPress={()=> setMostrarNube(true)}/>                        
                     </View>
                     <Text style={styles.head_text}>LISTA DE NOTAS</Text>
 
@@ -52,7 +55,7 @@ function menu () {
              
             }
 
-            
+            <StatusBar style="auto" />   
         </View>
     )
 }
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
         color:Interface.colorText,
         textAlign:'center',
         fontSize:22,
-        marginTop:20,
+        marginTop:15,
     },
     head:{
         flexDirection:'row',

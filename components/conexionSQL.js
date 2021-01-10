@@ -51,6 +51,13 @@ export const guardarDatos = ({titulo,descripcion,datos}) => {
     }
 }
 
+export const guardarDatosNube = ({titulo,descripcion,clave,fecha}) => {
+    db.transaction(tx => {             
+            tx.executeSql("insert into lista values (?, ?, ?, ?)", [clave,titulo,descripcion, fecha]);                
+        },(e) => console.log(e)    
+    )
+}
+
 export const leerTitulos = () => new Promise((resolve, reject) =>{
     let resul = []
     db.transaction(tx => {       
@@ -73,3 +80,21 @@ export const eliminarTitulo = (dato) =>{
         () => alert('borrado'))
 }
 
+export const limpiarDatos = () =>{    
+    db.transaction(
+        tx => {  
+            tx.executeSql(`delete from lista `, [])                    
+        },(e) => console.log(e),
+        ()=> console.log('Se limpiaron las notas'))
+}
+
+export const buscarUsuario = (usuario) => new Promise((resolve, reject) =>{    
+    db.transaction(tx => {       
+        tx.executeSql("select * from usuarios where password = ?", [usuario],  (tx, res) =>  {                
+            if (res.rows.length >0) {
+                resolve(true)
+            }               
+            resolve(false)            
+        })        
+      },(e) => alert(e));
+})
