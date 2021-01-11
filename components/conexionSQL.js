@@ -1,6 +1,7 @@
 import * as SQLITE from 'expo-sqlite'
 const db = SQLITE.openDatabase("db.db");
 
+
 export const borrarTablas = () =>{
     db.transaction(
         tx => {  
@@ -64,9 +65,9 @@ export const leerTitulos = () => new Promise((resolve, reject) =>{
         tx.executeSql("select * from lista", [],  (tx, res) =>  {            
             let index = 0;
             while (index < res.rows.length) {
-                resul = [...resul,res.rows.item(index)]
+                resul = [...resul,res.rows.item(index)]                
                 index++              
-            }               
+            }         
             resolve(resul)            
         })        
       },(e) => alert(e));

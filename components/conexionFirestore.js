@@ -42,7 +42,7 @@ export const subirNube = (titulos) =>{
     let data =[...titulos]    
     let error=''
     data.forEach(item => {                //nombre documento  //datos del docuemnto
-        DbFirestore.collection('boveda').doc(item.nombre).set(item).catch(e => error=e)
+        DbFirestore.collection('boveda').doc(item.titulo).set(item).catch(e => error=e)
     })
     if (!error)
        alert('Proceso correcto')

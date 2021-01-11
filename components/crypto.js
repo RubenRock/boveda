@@ -1,12 +1,17 @@
 import {clave} from './claveCrypto'
 
-export const resul = () => console.log(clave)
+const CryptoJS = require("crypto-js")
 
-export const prueba = () =>{
-    var CryptoJS = require("crypto-js");
 
-    var ciphertext = CryptoJS.AES.encrypt('hola como estas?', clave);
-    console.log("encrypted text", ciphertext.toString());
+export const encriptar = (texto) =>{
+    var ciphertext = CryptoJS.AES.encrypt(texto, clave)
+    return("encrypted text", ciphertext.toString())
+}
+
+export const desencriptar = (texto) =>{
+    var bytes  = CryptoJS.AES.decrypt(texto, clave);
+    var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+    return("decrypted text", plaintext)
 }
 
 

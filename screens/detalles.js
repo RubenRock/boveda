@@ -3,14 +3,11 @@ import {View, Text, StyleSheet, TextInput} from 'react-native'
 import * as Interface from '../components/interface'
 import { AntDesign } from '@expo/vector-icons'
 import * as ConexionSqlite from '../components/conexionSQL'
-import {resul, prueba} from '../components/crypto'
 
 
 function detalles({accion, datos}){            
     const [titulo, setTitulo] = useState(datos.titulo)
     const [descripcion, setDescripcion] = useState(datos.detalle)
-
-    prueba()
 
     return(
         <View style={styles.container}>

@@ -4,14 +4,32 @@ import * as Interface from '../components/interface'
 import { AntDesign } from '@expo/vector-icons'
 import * as ConeccionFirestore from '../components/conexionFirestore'
 import * as ConexionSqlite from '../components/conexionSQL'
+import * as Crypto from '../components/crypto'
 
 
 function nube ({accion}) {    
     
     const subirNube = async() =>{
+        let index = 0
+        let datosEncrptados = []        
+
         const titulos = await ConexionSqlite.leerTitulos() 
         await ConeccionFirestore.borrarNube()       
-        ConeccionFirestore.subirNube(titulos)
+        
+        //ConeccionFirestore.subirNube(titulos) 
+
+        while (index < titulos.length) {   
+            datosEncrptados=[...datosEncrptados,{
+                titulo : titulos[index].nombre,
+                descripcion : Crypto.encriptar(titulos[index].detalle),
+                clave : titulos[index].clave,
+                fecha : titulos[index].fecha
+                }
+            ]
+            index++                        
+        }
+        
+        ConeccionFirestore.subirNube(datosEncrptados)
     }
 
     const descargarNube = async() =>{
@@ -25,8 +43,8 @@ function nube ({accion}) {
 
         while (index < resul.length) {
             console.log(resul[index])
-            titulo = resul[index].nombre
-            descripcion = resul[index].detalle
+            titulo = resul[index].titulo
+            descripcion = Crypto.desencriptar(resul[index].descripcion)
             clave = resul[index].clave
             fecha = resul[index].fecha
             ConexionSqlite.guardarDatosNube({titulo,descripcion,clave,fecha})

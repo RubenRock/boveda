@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import {View, Text, StyleSheet,TouchableOpacity, TextInput} from 'react-native'
+import {View, Text, StyleSheet,TouchableOpacity, TextInput, Image} from 'react-native'
 import * as Interface from '../components/interface'
 import * as ConexionSqlite from '../components/conexionSQL'
 import Menu from './listanotas'
+
+const imagen = require('../assets/seguridad.svg')
 
 function login () {  
     const [usuario, setUsuario] = useState('')
@@ -20,6 +22,9 @@ function login () {
         <View style={{flex:1}}>            
         {!mostrarMenu ?
             <View style={styles.container}>
+                <View>
+                    <Image source={imagen} style={styles.image} /> 
+                </View>    
                 <Text style= {styles.text}> INICIAR SESION  </Text>
                 <TextInput secureTextEntry={true} 
                     onChangeText={texto => setUsuario(texto)} 
@@ -68,7 +73,12 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         fontSize:19,
         textAlign:'center',
-    }
+    },
+    image: {        
+        width: 50,
+        height:50,     
+        
+      },
 })
 
 
