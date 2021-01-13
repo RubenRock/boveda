@@ -1,7 +1,7 @@
 import {clave} from './claveCrypto'
 
-const CryptoJS = require("crypto-js")
-
+//const CryptoJS = require("crypto-js")
+import CryptoJS from 'react-native-crypto-js'
 
 export const encriptar = (texto) =>{
     var ciphertext = CryptoJS.AES.encrypt(texto, clave)

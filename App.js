@@ -5,12 +5,11 @@ import Login from './screens/login'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View style={styles.barra}>
-
-      </View>
-      <Login />      
-      <StatusBar style="auto" />
+    <View style={styles.container}>  
+    <View style={styles.barra}>
+    </View>
+      <StatusBar backgroundColor='rgba(155, 255, 155, 0.4)' style='auto' />     
+      <Login />            
     </View>
   );
 }
@@ -18,12 +17,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    //alignItems: 'center',
-    //justifyContent: 'center',
+    backgroundColor: 'black',   
   },
-  barra:{
-    backgroundColor:'rgba(155, 255, 155, 0.4)',
-    height:30,
+  barra:{    
+    height:45,
   }
+ 
 });

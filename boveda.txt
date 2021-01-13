@@ -2,4 +2,4 @@ npm install expo-sqlite
 
 npm install firebase --save
 
-npm install crypto-js --save
+npm install react-native-crypto-js

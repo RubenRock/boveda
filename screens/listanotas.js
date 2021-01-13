@@ -23,7 +23,7 @@ function menu () {
     },[])
 
     return(
-        <View style={{flex:1}}>
+        <View style={{flex:1}}>             
             {mostrarDetalles.estado ? //ventana de la descripcion de la nota
                    <Detalles accion={setMostrarDetalles} datos={mostrarDetalles}/>
             :
@@ -55,8 +55,8 @@ function menu () {
              
             }
 
-            <StatusBar style="auto" />   
-        </View>
+            
+        </View>       
     )
 }
 

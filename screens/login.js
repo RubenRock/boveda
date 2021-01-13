@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import {View, Text, StyleSheet,TouchableOpacity, TextInput, Image} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {View, Text, StyleSheet,TouchableOpacity, TextInput} from 'react-native'
 import * as Interface from '../components/interface'
 import * as ConexionSqlite from '../components/conexionSQL'
 import Menu from './listanotas'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const imagen = require('../assets/seguridad.svg')
+
 
 function login () {  
     const [usuario, setUsuario] = useState('')
@@ -18,12 +19,16 @@ function login () {
             alert('Usuario incorrecto')
     }
 
+    useEffect(() =>{
+        ConexionSqlite.crearTablas()
+    },[])
+
     return(
         <View style={{flex:1}}>            
         {!mostrarMenu ?
             <View style={styles.container}>
-                <View>
-                    <Image source={imagen} style={styles.image} /> 
+                <View style={{marginBottom:15}}>
+                    <MaterialCommunityIcons name="shield-lock-outline" size={80} color={Interface.colorText} />
                 </View>    
                 <Text style= {styles.text}> INICIAR SESION  </Text>
                 <TextInput secureTextEntry={true} 
